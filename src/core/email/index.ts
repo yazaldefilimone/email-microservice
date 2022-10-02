@@ -4,6 +4,12 @@ import { emailAddressValidate } from "~/shared/validators";
 import { EmailAddressType, EmailBuildResponse } from "./ports";
 
 export class Email {
+  public email: string;
+
+  private constructor(props: EmailAddressType) {
+    this.email = props.email;
+  }
+
   public isValidEmail(props: EmailAddressType): Either<Error, string> {
     return emailAddressValidate(props) ? right(props.email) : left(new InvalidEmailAddress(props));
   }
@@ -16,9 +22,9 @@ export class Email {
     if (emailAddress.email.isLeft()) {
       return left(emailAddress.email.value);
     }
-    const Address = {
+    const Address = new Email({
       email: emailAddress.email.value,
-    };
+    });
 
     return right(Address);
   }
