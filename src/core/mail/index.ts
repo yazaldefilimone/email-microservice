@@ -17,29 +17,29 @@ export class Mail implements IMail {
     this.replyToAddress = props.replyToAddress;
   }
 
-  public isSourceAddress(props: { sourceAddress: Email }): Either<Error, Email> {
+  public static isSourceAddress(props: { sourceAddress: Email }): Either<Error, Email> {
     const { sourceAddress } = props;
     return sourceAddress instanceof Email ? right(sourceAddress) : left(new Error("Invalid source address"));
   }
 
-  public isDestinationAddress(props: { destinationAddress: Email }): Either<Error, Email> {
+  public static isDestinationAddress(props: { destinationAddress: Email }): Either<Error, Email> {
     const { destinationAddress } = props;
     return destinationAddress instanceof Email
       ? right(destinationAddress)
       : left(new Error("Invalid destination address"));
   }
 
-  public isMessageTitle(props: { messageTitle: string }): Either<Error, string> {
+  public static isMessageTitle(props: { messageTitle: string }): Either<Error, string> {
     const { messageTitle } = props;
     return messageTitle.length <= 3 ? left(new Error("Invalid message Title")) : right(messageTitle);
   }
 
-  public isMessageBody(props: { messageBody: string }): Either<Error, string> {
+  public static isMessageBody(props: { messageBody: string }): Either<Error, string> {
     const { messageBody } = props;
     return messageBody.length < 2 ? left(new Error("Invalid message Title")) : right(messageBody);
   }
 
-  public build(props: IMail): MailBuildResponse<Mail> {
+  public static build(props: IMail): MailBuildResponse<Mail> {
     const building = {
       sourceAddress: this.isSourceAddress({ sourceAddress: props.sourceAddress }),
       destinationAddress: this.isDestinationAddress({ destinationAddress: props.destinationAddress }),
