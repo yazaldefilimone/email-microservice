@@ -27,24 +27,6 @@ const makeSut = () => {
 };
 
 describe("Mail", () => {
-  it("Should return an content mail all data will is correct", () => {
-    const { mail, sender, recipient } = makeSut();
-    if (sender.isLeft() || recipient.isLeft()) {
-      console.error("Email return error");
-      return null;
-    }
-    const mailParams: IMail = {
-      sourceAddress: sender.value,
-      destinationAddress: recipient.value,
-      messageBody: "Hey, I am again",
-      messageTitle: "Hello",
-    };
-    const result = mail.build(mailParams);
-    expect(result.isLeft()).toBe(false);
-    expect(result.isRight()).toBe(true);
-    expect(result.value).toEqual(mailParams);
-  });
-
   it("Should return an InvalidParamError  if messageBody will is not correct", () => {
     const { mail, sender, recipient } = makeSut();
     if (sender.isLeft() || recipient.isLeft()) {
@@ -115,5 +97,23 @@ describe("Mail", () => {
     expect(result.isLeft()).toBe(true);
     expect(result.isRight()).toBe(false);
     expect(result.value).toEqual(new InvalidParamError({ param: "destinationAddress" }));
+  });
+
+  it("Should return an content mail all data will is correct", () => {
+    const { mail, sender, recipient } = makeSut();
+    if (sender.isLeft() || recipient.isLeft()) {
+      console.error("Email return error");
+      return null;
+    }
+    const mailParams: IMail = {
+      sourceAddress: sender.value,
+      destinationAddress: recipient.value,
+      messageBody: "Hey, I am again",
+      messageTitle: "Hello",
+    };
+    const result = mail.build(mailParams);
+    expect(result.isLeft()).toBe(false);
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toEqual(mailParams);
   });
 });
