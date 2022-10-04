@@ -10,11 +10,11 @@ export class Email {
     this.email = props.email;
   }
 
-  public isValidEmail(props: EmailAddressType): Either<Error, string> {
+  public static isValidEmail(props: EmailAddressType): Either<Error, string> {
     return emailAddressValidate(props) ? right(props.email) : left(new InvalidParamError({ param: props.email }));
   }
 
-  public build(props: EmailAddressType): EmailBuildResponse {
+  public static build(props: EmailAddressType): EmailBuildResponse {
     const emailAddress = {
       email: this.isValidEmail(props),
     };
