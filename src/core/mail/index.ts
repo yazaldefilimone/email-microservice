@@ -19,10 +19,16 @@ export class Mail implements IMail {
 
   public isSourceAddress(props: { sourceAddress: Email }): Either<Error, Email> {
     const { sourceAddress } = props;
-    return sourceAddress instanceof Email ? right(props.sourceAddress) : left(new Error("Invalid source address"));
+    return sourceAddress instanceof Email ? right(sourceAddress) : left(new Error("Invalid source address"));
   }
 
-  public isDestinationAddress(props: { destinationAddress: string }): Either<Error, string> {}
+  public isDestinationAddress(props: { destinationAddress: Email }): Either<Error, Email> {
+    const { destinationAddress } = props;
+    return destinationAddress instanceof Email
+      ? right(destinationAddress)
+      : left(new Error("Invalid destination address"));
+  }
+
   public isMessageTitle(props: { messageTitle: string }): Either<Error, string> {}
   public isMessageBody(props: { messageBody: string }): Either<Error, string> {}
 
