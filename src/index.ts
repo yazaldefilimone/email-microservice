@@ -5,6 +5,7 @@ import { Transporter } from "~/services/nodemailer/transporter";
 import { transporterInput } from "~/services/nodemailer/transporter/ports";
 import { env } from "~/shared/env";
 import { IMail } from "~/core/mail/ports";
+import { SendGridEmailService } from "~/services/sendgrid";
 
 const core = async function () {
   const transport: transporterInput = {
@@ -32,6 +33,9 @@ const core = async function () {
     messageBody: "Hey there, how are you?",
     messageTitle: "Hello",
   };
+  // const sendGridEmailService = new SendGridEmailService(sendGrind)
+  // const result = sendGridEmailService.sendMail(mail)
+
   const nodemailerEmailService = new NodemailerEmailService(transporter.value);
 
   const result = await nodemailerEmailService.sendMail(mail);
