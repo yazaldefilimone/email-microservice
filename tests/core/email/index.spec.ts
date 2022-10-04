@@ -29,4 +29,17 @@ describe("Email Address", () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({ email: emailCorrect.correct });
   });
+
+  it("Should return invalidParamError if email will is not correct", () => {
+    const { emailAddress, emailIncorrect } = makeSut();
+
+    const result = emailAddress.build({ email: emailIncorrect.incorrect });
+
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toBeInstanceOf(InvalidParamError);
+    expect(result.value instanceof InvalidParamError && result.value.message).toBe(
+      `This [${emailIncorrect.incorrect}] is not valid`
+    );
+  });
 });
