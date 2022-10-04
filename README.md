@@ -5,3 +5,10 @@
   <img alt="Stars" src="https://img.shields.io/github/stars/yazaldefilimonepinto/email-microservice?color=FFFFFF&labelColor=110C2F">
   <img alt="Languages" src="https://img.shields.io/github/languages/count/yazaldefilimonepinto/email-microservice?color=FFFFFF&labelColor=110C2F">
 </p>
+
+ Robust email microservice using SOLID design principles
+ 
+ ## License
+
+[MIT](https://github.com/yazaldefilimonepinto/yazaldefilimone/blob/main/LICENSE) © [Yazalde Filimone](https://www.linkedin.com/in/yazalde-filimone/)
+
