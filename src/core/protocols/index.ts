@@ -10,7 +10,7 @@ type mailTransmissionSuccess = {
 type mailTransmissionFailed = InvalidParamError | InternalServerError;
 
 export interface IMailService {
-  sendMail(mail: IMailService.Input): IMailService.OutPut;
+  sendMail: (mail: IMailService.Input) => IMailService.OutPut;
 }
 export namespace IMailService {
   export type Input = IMail;
