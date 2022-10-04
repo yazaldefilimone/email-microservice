@@ -28,7 +28,7 @@
     "start:dev": "nodemon",
     "test": "jest",
     "test:dev": "jest --watch",
-    "testWithCoverage": "jest --coverage"
+    "test:co": "jest --coverage"
   },
   "repository": "git@github.com:yazaldefilimonepinto/email-microservice.git",
   "bugs": {
