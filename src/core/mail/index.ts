@@ -1,4 +1,4 @@
-import { Email } from "../email";
+import { Email } from "~/core/email";
 import { IMail } from "./ports";
 
 export class Mail implements IMail {
