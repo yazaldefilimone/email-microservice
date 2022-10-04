@@ -1,6 +1,6 @@
 import { Email } from "~/core/email";
 import { Either, left, right } from "~/shared/error-handler/either";
-import { IMail } from "./ports";
+import { IMail, MailBuildResponse } from "./ports";
 
 export class Mail implements IMail {
   public readonly sourceAddress: Email;
@@ -39,7 +39,39 @@ export class Mail implements IMail {
     return messageBody.length < 2 ? left(new Error("Invalid message Title")) : right(messageBody);
   }
 
-  public build(props: IMail) {
-    new Mail(props);
+  public build(props: IMail): MailBuildResponse<Mail> {
+    const building = {
+      sourceAddress: this.isSourceAddress({ sourceAddress: props.sourceAddress }),
+      destinationAddress: this.isDestinationAddress({ destinationAddress: props.destinationAddress }),
+      messageTitle: this.isMessageTitle({ messageTitle: props.messageTitle }),
+      messageBody: this.isMessageBody({ messageBody: props.messageBody }),
+      replyToAddress: props.replyToAddress,
+    };
+
+    if (building.sourceAddress.isLeft()) {
+      return left(building.sourceAddress.value);
+    }
+
+    if (building.destinationAddress.isLeft()) {
+      return left(building.destinationAddress.value);
+    }
+
+    if (building.messageTitle.isLeft()) {
+      return left(building.messageTitle.value);
+    }
+
+    if (building.messageBody.isLeft()) {
+      return left(building.messageBody.value);
+    }
+
+    const mail = {
+      sourceAddress: building.sourceAddress.value,
+      destinationAddress: building.destinationAddress.value,
+      messageTitle: building.messageTitle.value,
+      messageBody: building.messageBody.value,
+      replyToAddress: building.replyToAddress,
+    };
+
+    return right(new Mail(mail));
   }
 }
