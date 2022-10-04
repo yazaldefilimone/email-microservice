@@ -20,7 +20,8 @@ describe("Mail", () => {
     const sender = Email.build({ email: emailCorrect.correct });
     const recipient = Email.build({ email: emailCorrect.correctSecund });
     if (sender.isLeft() || recipient.isLeft()) {
-      return null;
+      console.error("Email return error");
+      throw new Error("Email return error");
     }
     const mailParams: IMail = {
       sourceAddress: sender.value,
@@ -31,5 +32,6 @@ describe("Mail", () => {
     const result = mail.build(mailParams);
     expect(result.isLeft()).toBe(false);
     expect(result.isRight()).toBe(true);
+    expect(result.value).toEqual(mailParams);
   });
 });
