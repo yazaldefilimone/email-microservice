@@ -1,4 +1,5 @@
 import { Email } from "~/core/email";
+import { InvalidParamError } from "~/errors";
 import { Either, left, right } from "~/shared/error-handler/either";
 import { IMail, MailBuildResponse } from "./ports";
 
@@ -17,26 +18,28 @@ export class Mail implements IMail {
     this.replyToAddress = props.replyToAddress;
   }
 
-  public static isSourceAddress(props: { sourceAddress: Email }): Either<Error, Email> {
+  public static isSourceAddress(props: { sourceAddress: Email }): Either<InvalidParamError, Email> {
     const { sourceAddress } = props;
-    return sourceAddress instanceof Email ? right(sourceAddress) : left(new Error("Invalid source address"));
+    return sourceAddress instanceof Email
+      ? right(sourceAddress)
+      : left(new InvalidParamError({ param: "sourceAddress" }));
   }
 
-  public static isDestinationAddress(props: { destinationAddress: Email }): Either<Error, Email> {
+  public static isDestinationAddress(props: { destinationAddress: Email }): Either<InvalidParamError, Email> {
     const { destinationAddress } = props;
     return destinationAddress instanceof Email
       ? right(destinationAddress)
-      : left(new Error("Invalid destination address"));
+      : left(new InvalidParamError({ param: "destinationAddress" }));
   }
 
-  public static isMessageTitle(props: { messageTitle: string }): Either<Error, string> {
+  public static isMessageTitle(props: { messageTitle: string }): Either<InvalidParamError, string> {
     const { messageTitle } = props;
-    return messageTitle.length <= 3 ? left(new Error("Invalid message Title")) : right(messageTitle);
+    return messageTitle.length <= 3 ? left(new InvalidParamError({ param: "messageTitle" })) : right(messageTitle);
   }
 
-  public static isMessageBody(props: { messageBody: string }): Either<Error, string> {
+  public static isMessageBody(props: { messageBody: string }): Either<InvalidParamError, string> {
     const { messageBody } = props;
-    return messageBody.length < 2 ? left(new Error("Invalid message Title")) : right(messageBody);
+    return messageBody.length < 2 ? left(new InvalidParamError({ param: "messageBody" })) : right(messageBody);
   }
 
   public static build(props: IMail): MailBuildResponse<Mail> {
