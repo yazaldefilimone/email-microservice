@@ -1,4 +1,4 @@
-import { InvalidEmailAddress } from "~/errors";
+import { InvalidParamError } from "~/errors";
 import { Either, left, right } from "~/shared/error-handler/either";
 import { emailAddressValidate } from "~/shared/validators";
 import { EmailAddressType, EmailBuildResponse } from "./ports";
@@ -11,7 +11,7 @@ export class Email {
   }
 
   public isValidEmail(props: EmailAddressType): Either<Error, string> {
-    return emailAddressValidate(props) ? right(props.email) : left(new InvalidEmailAddress(props));
+    return emailAddressValidate(props) ? right(props.email) : left(new InvalidParamError({ param: props.email }));
   }
 
   public build(props: EmailAddressType): EmailBuildResponse {

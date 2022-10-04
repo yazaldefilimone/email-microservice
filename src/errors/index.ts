@@ -1,1 +1,1 @@
-export * from "./InvalidEmailAddress";
+export * from "./InvalidParamError";
