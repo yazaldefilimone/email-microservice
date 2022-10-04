@@ -3,7 +3,6 @@ import { InternalServerError, InvalidParamError } from "~/errors";
 import { Either } from "~/shared/error-handler/either";
 
 type mailTransmissionSuccess = {
-  success: boolean;
   message: string;
 };
 
