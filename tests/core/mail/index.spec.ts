@@ -80,4 +80,22 @@ describe("Mail", () => {
     expect(result.isRight()).toBe(false);
     expect(result.value).toEqual(new InvalidParamError({ param: "messageTitle" }));
   });
+
+  it("Should return an InvalidParamError  if sourceAddress will is not correct", () => {
+    const { mail, sender, recipient, emails } = makeSut();
+    if (sender.isLeft() || recipient.isLeft()) {
+      console.error("Email return error");
+      return null;
+    }
+    const mailParams: IMail = {
+      sourceAddress: { email: emails.incorrect.emailFirst },
+      destinationAddress: recipient.value,
+      messageBody: "Hey, I am again",
+      messageTitle: "Hello",
+    };
+    const result = mail.build(mailParams);
+    expect(result.isLeft()).toBe(true);
+    expect(result.isRight()).toBe(false);
+    expect(result.value).toEqual(new InvalidParamError({ param: "sourceAddress" }));
+  });
 });
